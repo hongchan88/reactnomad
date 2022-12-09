@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.js": "/reactnomad/static/js/main.926bc9cb.chunk.js",
+    "main.js.map": "/reactnomad/static/js/main.926bc9cb.chunk.js.map",
+    "runtime-main.js": "/reactnomad/static/js/runtime-main.ff50b756.js",
+    "runtime-main.js.map": "/reactnomad/static/js/runtime-main.ff50b756.js.map",
+    "static/js/2.057180aa.chunk.js": "/reactnomad/static/js/2.057180aa.chunk.js",
+    "static/js/2.057180aa.chunk.js.map": "/reactnomad/static/js/2.057180aa.chunk.js.map",
+    "index.html": "/reactnomad/index.html",
+    "static/js/2.057180aa.chunk.js.LICENSE.txt": "/reactnomad/static/js/2.057180aa.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ff50b756.js",
+    "static/js/2.057180aa.chunk.js",
+    "static/js/main.926bc9cb.chunk.js"
+  ]
+}
