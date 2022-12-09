@@ -1,6 +1,6 @@
-import { useQuery } from "react-query";
-import { fetchCoinHistory } from "../api";
-import ApexChart from "react-apexcharts";
+import { useQuery } from 'react-query';
+import { fetchCoinHistory } from '../api';
+import ApexChart from 'react-apexcharts';
 
 interface IHistorical {
   time_open: string;
@@ -17,28 +17,37 @@ interface ChartProps {
 }
 function Chart({ coinId }: ChartProps) {
   const { isLoading, data } = useQuery<IHistorical[]>(
-    ["ohlcv", coinId],
+    ['ohlcv', coinId],
     () => fetchCoinHistory(coinId),
     {
       refetchInterval: 10000,
     }
   );
+
+  const exceptData = data ?? [];
+  const chartData = exceptData?.map((i) => {
+    return {
+      x: i.time_close,
+      y: [i.open, i.high, i.low, i.close],
+    };
+  });
+
   return (
     <div>
       {isLoading ? (
-        "Loading chart..."
+        'Loading chart...'
       ) : (
         <ApexChart
-          type="line"
+          type='candlestick'
           series={[
             {
-              name: "Price",
-              data: data?.map((price) => price.close),
+              name: 'Price',
+              data: chartData,
             },
           ]}
           options={{
             theme: {
-              mode: "dark",
+              mode: 'dark',
             },
             chart: {
               height: 300,
@@ -46,11 +55,11 @@ function Chart({ coinId }: ChartProps) {
               toolbar: {
                 show: false,
               },
-              background: "transparent",
+              background: 'transparent',
             },
             grid: { show: false },
             stroke: {
-              curve: "smooth",
+              curve: 'smooth',
               width: 4,
             },
             yaxis: {
@@ -60,14 +69,14 @@ function Chart({ coinId }: ChartProps) {
               axisBorder: { show: false },
               axisTicks: { show: false },
               labels: { show: false },
-              type: "datetime",
+              type: 'datetime',
               categories: data?.map((price) => price.time_close),
             },
             fill: {
-              type: "gradient",
-              gradient: { gradientToColors: ["#0be881"], stops: [0, 100] },
+              type: 'gradient',
+              gradient: { gradientToColors: ['#0be881'], stops: [0, 100] },
             },
-            colors: ["#0fbcf9"],
+            colors: ['#0fbcf9'],
             tooltip: {
               y: {
                 formatter: (value) => `$${value.toFixed(2)}`,

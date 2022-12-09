@@ -1,6 +1,9 @@
-import { createGlobalStyle } from "styled-components";
-import Router from "./Router";
-import { ReactQueryDevtools } from "react-query/devtools";
+import styled, { createGlobalStyle } from 'styled-components';
+import Router from './Router';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { ThemeProvider } from 'styled-components';
+import { lightTheme, darkTheme } from './theme';
+import { useState } from 'react';
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -67,12 +70,34 @@ a {
 }
 `;
 
+const Container = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  margin-right: 100px;
+`;
+const Button = styled.div`
+  background-color: whitesmoke;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 10px;
+`;
 function App() {
+  const [isDark, setIsDark] = useState(false);
+  const toggleDark = () => setIsDark((prev) => !prev);
+
   return (
     <>
-      <GlobalStyle />
-      <Router />
-      <ReactQueryDevtools initialIsOpen={true} />
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <Container>
+          <Button onClick={toggleDark}>
+            {isDark ? 'Light Mode' : 'Dark Mode'}
+          </Button>
+        </Container>
+        <GlobalStyle />
+        <Router />
+        <ReactQueryDevtools initialIsOpen={true} />
+      </ThemeProvider>
     </>
   );
 }

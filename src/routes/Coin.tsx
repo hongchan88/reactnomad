@@ -81,6 +81,20 @@ const Tab = styled.span<{ isActive: boolean }>`
   }
 `;
 
+const HeaderContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Button = styled.div`
+  background-color: white;
+  border: 1px solid black;
+  padding: 5px 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+`;
+
 interface RouteParams {
   coinId: string;
 }
@@ -158,6 +172,8 @@ function Coin() {
     }
   );
   const loading = infoLoading || tickersLoading;
+
+  console.log(infoData, tickersData);
   return (
     <Container>
       <Helmet>
@@ -166,9 +182,14 @@ function Coin() {
         </title>
       </Helmet>
       <Header>
-        <Title>
-          {state?.name ? state.name : loading ? 'Loading...' : infoData?.name}
-        </Title>
+        <HeaderContainer>
+          <Title>
+            {state?.name ? state.name : loading ? 'Loading...' : infoData?.name}
+          </Title>
+          <Link to={'/'}>
+            <Button>Home</Button>
+          </Link>
+        </HeaderContainer>
       </Header>
       {loading ? (
         <Loader>Loading...</Loader>
@@ -211,7 +232,10 @@ function Coin() {
 
           <Switch>
             <Route path={`/:coinId/price`}>
-              <Price />
+              <Price
+                price={tickersData?.quotes?.USD?.price}
+                ath={tickersData?.quotes?.USD?.ath_price}
+              />
             </Route>
             <Route path={`/:coinId/chart`}>
               <Chart coinId={coinId} />
